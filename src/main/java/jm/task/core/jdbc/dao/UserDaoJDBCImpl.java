@@ -17,10 +17,10 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Connection con = Util.getConnection(); Statement statement = con.createStatement()) {
             if (statement.executeUpdate("SHOW TABLE STATUS LIKE 'users'") == 0) {
                 statement.executeUpdate("CREATE TABLE `users` (\n" +
-                        "  `Id` bigint NOT NULL AUTO_INCREMENT,\n" +
-                        "  `Name` varchar(45) NOT NULL,\n" +
-                        "  `LastName` varchar(45) NOT NULL,\n" +
-                        "  `age` tinyint NOT NULL,\n" +
+                        "  `Id` BIGINT NOT NULL AUTO_INCREMENT,\n" +
+                        "  `Name` VARCHAR(45) NOT NULL,\n" +
+                        "  `LastName` VARCHAR(45) NOT NULL,\n" +
+                        "  `age` TINYINT NOT NULL,\n" +
                         "  PRIMARY KEY (`Id`)\n" +
                         ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb3");
                 System.out.println("Таблица создана!");
@@ -35,7 +35,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public void dropUsersTable() {
         try (Connection con = Util.getConnection(); Statement statement = con.createStatement()) {
             if (statement.executeUpdate("SHOW TABLE STATUS LIKE 'users'") == -1) {
-                statement.execute("drop table users");
+                statement.execute("DROP TABLE users");
                 System.out.println("Таблица стерта с лица Земли!");
             } else {
                 System.out.println("Таблицы с таким именем и так не существовало");
@@ -77,7 +77,7 @@ public class UserDaoJDBCImpl implements UserDao {
              PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM users");
              ResultSet rs = preparedStatement.executeQuery()) {
             while (rs.next()) {
-                userList.add(new User(rs.getLong("Id"),rs.getString("Name"),
+                userList.add(new User(rs.getLong("Id"), rs.getString("Name"),
                         rs.getString("LastName"), rs.getByte("age")));
             }
         } catch (SQLException e) {
@@ -88,7 +88,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void cleanUsersTable() {
         try (Connection con = Util.getConnection(); Statement statement = con.createStatement()) {
-            statement.executeUpdate("delete from users where id > 0");
+            statement.executeUpdate("DELETE FROM users WHERE id > 0");
             System.out.println("Таблица очищена!");
         } catch (SQLException e) {
             throw new RuntimeException(e);

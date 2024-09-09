@@ -6,31 +6,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Util {
-    private static String url = "jdbc:mysql://localhost:3306/pp_jdbc";
-    private static String name = "root";
-    private static String password = "qwerty";
-    private static Connection con;
-    private static Statement statement;
+    private static final String URL = "jdbc:mysql://localhost:3306/pp_jdbc";
+    private static final String NAME = "root";
+    private static final String PASSWORD = "qwerty";
+    private static Connection CON;
 
     public static Connection getConnection() {
         try {
-            con = DriverManager.getConnection(url, name, password);
+            CON = DriverManager.getConnection(URL, NAME, PASSWORD);
         } catch (SQLException e) {
             System.err.println("Неудалось подключиться к БД!");
         }
-        return con;
-    }
-
-    public static void close()  {
-        try {
-            if (!con.isClosed()) {
-                con.close();
-                System.out.println("Соединение закрыто!");
-            } else {
-            System.out.println("Связь с БД уже закрыта!");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        return CON;
     }
 }
